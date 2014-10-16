@@ -5,6 +5,8 @@ import java.util.Vector;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Point;
 
 public class Grass {
 
@@ -13,6 +15,7 @@ public class Grass {
 	private double stageTimer;
 	private double size;
 	
+	private int thickness = 3;
 	// location
 	private int x,y;
 	// grass blades
@@ -39,7 +42,7 @@ public class Grass {
 		stageTimer = 0;
 		
 		maxBlades = 4;
-		size = 5;
+		size = 1;
 		maxSize = 55;
 		growthChance = 0.1;
 		growthAmount = 1;
@@ -128,6 +131,7 @@ public class Grass {
 	public void rebirth()
 	{
 		stage = 0;
+		size = 1;
 		randomizeColor();
 	}
 	
@@ -148,9 +152,30 @@ public class Grass {
 			p.setColor(color);
 			for(int i = 0; i<blades.size(); i++)
 			{
-				c.drawLine(x, y, x+((int)(lawn.getWind()+blades.get(i).bladeOffset)), (int) (y-size), p);
+				//c.draw
+				//c.drawLine(x, y, x+((int)(lawn.getWind()+blades.get(i).bladeOffset)), (int) (y-size), p);
+				drawTriangle(new Point(x-thickness,y),new Point(x+thickness,y), new Point(x+((int)(lawn.getWind()+blades.get(i).bladeOffset)), (int) (y-size)),color,c);
 			}
 		}
+	}
+	
+	public void drawTriangle(Point p1, Point p2, Point p3, int clr, Canvas c)
+	{
+		Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+		paint.setStrokeWidth(1);
+		paint.setColor(clr);
+		paint.setStyle(Paint.Style.FILL_AND_STROKE);
+		paint.setAntiAlias(true);
+
+		Path path = new Path();
+		path.setFillType(Path.FillType.EVEN_ODD);
+		path.moveTo(p1.x,p1.y);
+		path.lineTo(p2.x,p2.y);
+		path.lineTo(p3.x,p3.y);
+		path.close();
+
+		c.drawPath(path, paint);
 	}
 	
 }

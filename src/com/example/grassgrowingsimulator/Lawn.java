@@ -13,6 +13,10 @@ public class Lawn {
 	private double windChange;
 	private double maxWind;
 	
+	// water grid
+	// wind grid
+	
+	
 	public Lawn(int width, int height)
 	{
 		lawn = new Vector<Grass>();
