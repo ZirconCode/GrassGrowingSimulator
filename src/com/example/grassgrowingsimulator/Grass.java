@@ -8,9 +8,14 @@ import android.graphics.Paint;
 
 public class Grass {
 
-	// grass blades
-	private int x,y;
+	// growth
+	private int stage; // 0 = seed, 1 = growing, 2 = mature, 3 = dying
+	private double stageTimer;
 	private double size;
+	
+	// location
+	private int x,y;
+	// grass blades
 	//private double windOffset;
 	Vector<Blade> blades;
 	
@@ -30,10 +35,12 @@ public class Grass {
 		this.x = x;
 		this.y = y;
 		lawn = l;
+		stage = 0;
+		stageTimer = 0;
 		
 		maxBlades = 4;
 		size = 5;
-		maxSize = 45;
+		maxSize = 55;
 		growthChance = 0.1;
 		growthAmount = 1;
 		randomizeColor();
@@ -61,21 +68,89 @@ public class Grass {
 		color = Color.rgb(r,g,b);
 	}
 	
+	public void brownifyColor()
+	{
+		int r = Color.red(color);
+		int g = Color.green(color);
+		int b = Color.blue(color);
+		
+		r = r + 1;
+		if(r > 150) r = 130;
+		g = g - 1;
+		if(g < 50) g = 70;
+		b = b - 1;
+		if(b < 0) b = 0;
+		
+		color = Color.rgb(r,g,b);
+		
+		//color = Color.GRAY;
+	}
+	
 	public void tick()
 	{
-		if(Math.random()<growthChance) size += growthAmount;
+		if(stage == 0)
+		{
+			advanceStage(50*5);
+		}
+		else if(stage == 1)
+		{
+			if(Math.random()<growthChance) size += growthAmount;
+			if(size > maxSize) size = maxSize;
+			
+			advanceStage(50*10);
+		}
+		else if(stage == 2)
+		{
+			advanceStage(50*10);
+		}
+		else if(stage == 3)
+		{	
+			// brownify
+			brownifyColor();
+			// eventually, die & re-seed, anything else?...
+			advanceStage(50*10); 
+		}
 		
-		if(size > maxSize) size = maxSize;
+		
+	}
+	
+	public void advanceStage(int ticksRequired)
+	{
+		stageTimer++;
+		if(stageTimer > ticksRequired)
+		{
+			stage++;
+			stageTimer = 0;
+			if(stage >= 4) rebirth();
+		}
+	}
+	
+	public void rebirth()
+	{
+		stage = 0;
+		randomizeColor();
+	}
+	
+	public void die()
+	{
+		//
 	}
 	
 	public void draw(Paint p, Canvas c)
 	{
-		p.setColor(color);
-		for(int i = 0; i<blades.size(); i++)
+		if(stage == 0)
 		{
-			c.drawLine(x, y, x+((int)(lawn.getWind()+blades.get(i).bladeOffset)), (int) (y-size), p);
+			p.setColor(Color.rgb(80, 40, 0));
+			c.drawCircle(x, y, 3, p);
 		}
-		
+		else
+		{
+			p.setColor(color);
+			for(int i = 0; i<blades.size(); i++)
+			{
+				c.drawLine(x, y, x+((int)(lawn.getWind()+blades.get(i).bladeOffset)), (int) (y-size), p);
+			}
+		}
 	}
 	
 }
