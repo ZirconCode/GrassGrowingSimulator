@@ -54,6 +54,10 @@ public class SimulatorView extends SurfaceView implements SurfaceHolder.Callback
 		lawn = new Lawn(width,height);
 	}
 	
+	public void setPaused(boolean paused) {
+		thread.setPaused(paused);
+	}
+	
 	public void update()
 	{
 		lawn.tick();
@@ -68,6 +72,11 @@ public class SimulatorView extends SurfaceView implements SurfaceHolder.Callback
 //    	
     	canvas.drawColor(Color.rgb(180,130,70));
     	lawn.draw(paint, canvas);
+    	
+    	if(thread.getPaused()) 
+    	{
+    		canvas.drawText("Paused", 100, 100, paint); // TODO...
+    	}
     	
     	// Menu
     		// pick tools
