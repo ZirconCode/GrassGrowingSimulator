@@ -1,4 +1,4 @@
-package com.example.grassgrowingsimulator;
+package com.zirconcode.grassgrowingsimulator;
 
 import android.graphics.Canvas;
 import android.util.Log;
@@ -9,6 +9,7 @@ public class MainThread extends Thread {
     private static final String TAG = MainThread.class.getSimpleName();
 	
 	// state
+    private boolean paused;
 	private boolean running;
 	private SurfaceHolder surfaceHolder;
 	private SimulatorView gamePanel;
@@ -29,6 +30,15 @@ public class MainThread extends Thread {
 		this.running = running;
 	}
 
+	public void setPaused(boolean paused) {
+		this.paused = paused;
+	}
+	
+	public boolean getPaused()
+	{
+		return paused;
+	}
+	
 	@Override
 	public void run() {
 		Canvas canvas;
@@ -51,7 +61,7 @@ public class MainThread extends Thread {
 					beginTime = System.currentTimeMillis();
 					framesSkipped = 0;	// resetting the frames skipped
 					// update game state 
-					this.gamePanel.update();
+					if(!paused) this.gamePanel.update();
 					// render state to the screen
 					// draws the canvas on the panel
 					if(canvas != null) this.gamePanel.render(canvas);				

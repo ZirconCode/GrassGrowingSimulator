@@ -1,4 +1,4 @@
-package com.example.grassgrowingsimulator;
+package com.zirconcode.grassgrowingsimulator;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -20,6 +20,9 @@ public class MainActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+	
+		// load gamestate
+		// .. TODO
 		
 		simView = new SimulatorView(this);
         setContentView(simView);
@@ -29,10 +32,34 @@ public class MainActivity extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 	}
-
+	
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+	}
+	
 	@Override
 	protected void onStop() {
 		super.onStop();
 	}
+	
+	
+	@Override
+	protected void onResume() {
+		simView.setPaused(false);
+		super.onResume();
+	}
+	
+	@Override
+	protected void onPause() {
+		simView.setPaused(true);
+		
+		// save gamestate
+		// .. TODO
+		
+		super.onPause();
+	}
+	
 	
 }

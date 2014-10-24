@@ -1,4 +1,4 @@
-package com.example.grassgrowingsimulator;
+package com.zirconcode.grassgrowingsimulator;
 
 public class Blade {
 	// blade of grass

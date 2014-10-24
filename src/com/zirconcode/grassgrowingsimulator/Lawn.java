@@ -1,4 +1,4 @@
-package com.example.grassgrowingsimulator;
+package com.zirconcode.grassgrowingsimulator;
 
 import java.util.Vector;
 
