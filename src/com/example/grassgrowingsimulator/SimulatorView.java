@@ -83,17 +83,23 @@ public class SimulatorView extends SurfaceView implements SurfaceHolder.Callback
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
+		if (thread.getState() == Thread.State.TERMINATED) {
+			thread = new MainThread(getHolder(), this);
+		}
 		thread.setRunning(true);
 		thread.start();
 	}
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
+		thread.setRunning(false);
+		
 		boolean retry = true;
         while (retry) {
             try {
                 thread.join();
                 retry = false;
+                //((Activity)getContext()).finish();
             } catch (InterruptedException e) {
                 // try again shutting down the thread
             }
