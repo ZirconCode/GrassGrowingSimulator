@@ -1,5 +1,6 @@
 package com.zirconcode.grassgrowingsimulator;
 
+import java.io.File;
 import java.util.Vector;
 
 import android.annotation.SuppressLint;
@@ -56,6 +57,16 @@ public class SimulatorView extends SurfaceView implements SurfaceHolder.Callback
 	
 	public void setPaused(boolean paused) {
 		thread.setPaused(paused);
+	}
+	
+	public Lawn getGamestate()
+	{
+		return lawn;
+	}
+	
+	public void setGamestate(Lawn l)
+	{
+		lawn = l;
 	}
 	
 	public void update()

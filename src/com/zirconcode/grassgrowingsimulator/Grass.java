@@ -2,42 +2,63 @@ package com.zirconcode.grassgrowingsimulator;
 
 import java.util.Vector;
 
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 
+@Root
 public class Grass {
 
 	// growth
+	@Element
 	private int stage; // 0 = seed, 1 = growing, 2 = mature, 3 = dying
+	@Element
 	private double stageTimer;
+	@Element
 	private double size;
 	
+	@Element
 	private int thickness = 3;
 	// location
+	@Element
 	private int x,y;
 	// grass blades
 	//private double windOffset;
+	@ElementList
 	Vector<Blade> blades;
 	
 	// special grass traits
+	@Element
 	private int maxBlades;
+	@Element
 	private double maxSize;
+	@Element
 	private double growthChance;
+	@Element
 	private double growthAmount; // TODO chance to growthRate & maxGrowth
+	@Element
 	private int color;
 	// color
 	// etc...
 	
-	private Lawn lawn;
+	//private Lawn lawn;
 	
-	public Grass(int x, int y, Lawn l)
+	public Grass()
+	{
+		// no-arg for serialization
+	}
+	
+	public Grass(int x, int y) //,Lawn l
 	{
 		this.x = x;
 		this.y = y;
-		lawn = l;
+		//lawn = l;
 		stage = 0;
 		stageTimer = 0;
 		
@@ -154,7 +175,8 @@ public class Grass {
 			{
 				//c.draw
 				//c.drawLine(x, y, x+((int)(lawn.getWind()+blades.get(i).bladeOffset)), (int) (y-size), p);
-				drawTriangle(new Point(x-thickness,y),new Point(x+thickness,y), new Point(x+((int)(lawn.getWind()+blades.get(i).bladeOffset)), (int) (y-size)),color,c);
+				//drawTriangle(new Point(x-thickness,y),new Point(x+thickness,y), new Point(x+((int)(lawn.getWind()+blades.get(i).bladeOffset)), (int) (y-size)),color,c);
+				drawTriangle(new Point(x-thickness,y),new Point(x+thickness,y), new Point(x+((int)(blades.get(i).bladeOffset)), (int) (y-size)),color,c);
 			}
 		}
 	}

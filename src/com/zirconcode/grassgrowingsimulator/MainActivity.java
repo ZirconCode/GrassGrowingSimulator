@@ -1,5 +1,10 @@
 package com.zirconcode.grassgrowingsimulator;
 
+import java.io.File;
+
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
+
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,10 +27,9 @@ public class MainActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 	
-		// load gamestate
-		// .. TODO
-		
 		simView = new SimulatorView(this);
+		load();
+		
         setContentView(simView);
 	}
 	
@@ -55,12 +59,48 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onPause() {
 		simView.setPaused(true);
-		
-		// save gamestate
-		// .. TODO
+		save();
 		
 		super.onPause();
 	}
 	
+	public void load()
+	{
+		// check if lawn exists...
+		File f = new File(getFilesDir(), "lawn");
+		if (f.exists())
+        {
+            try
+            {
+                Serializer serializer = new Persister();
+                Lawn lawn = serializer.read(Lawn.class, f);
+                simView.setGamestate(lawn);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                // TODO
+            }
+        }
+		else
+		{
+			// new lawn is created in SimulatorView constructor
+		}
+	}
+	
+	public void save()
+	{
+		File f = new File(getFilesDir(), "lawn");
+		try
+        {
+            Serializer serializer = new Persister();
+            serializer.write(simView.getGamestate(), f);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            // TODO
+        }
+	}
 	
 }

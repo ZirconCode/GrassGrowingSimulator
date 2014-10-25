@@ -2,11 +2,16 @@ package com.zirconcode.grassgrowingsimulator;
 
 import java.util.Vector;
 
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
+
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+@Root
 public class Lawn {
 
+	@ElementList
 	private Vector<Grass> lawn;
 	
 	private double wind;
@@ -16,6 +21,10 @@ public class Lawn {
 	// water grid
 	// wind grid
 	
+	public Lawn()
+	{
+		// no-arg for serialization
+	}
 	
 	public Lawn(int width, int height)
 	{
@@ -31,7 +40,7 @@ public class Lawn {
 	
 	public void plant(int x, int y)
 	{
-		Grass g = new Grass(x,y,this);
+		Grass g = new Grass(x,y);
 		lawn.add(g);
 	}
 	
