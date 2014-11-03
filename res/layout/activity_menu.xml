@@ -13,6 +13,14 @@
         android:text="@string/play" />
 
     <Button
+        android:id="@+id/button_clear_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:onClick="clearData"
+        android:text="@string/clear" />
+    
+    <Button
         android:id="@+id/button_exit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

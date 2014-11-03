@@ -67,7 +67,7 @@ public class MainActivity extends Activity {
 	public void load()
 	{
 		// check if lawn exists...
-		File f = new File(getFilesDir(), "lawn");
+		File f = new File(getFilesDir(), getString(R.string.lawn_filename));
 		if (f.exists())
         {
             try
@@ -90,7 +90,7 @@ public class MainActivity extends Activity {
 	
 	public void save()
 	{
-		File f = new File(getFilesDir(), "lawn");
+		File f = new File(getFilesDir(), getString(R.string.lawn_filename));
 		try
         {
             Serializer serializer = new Persister();
