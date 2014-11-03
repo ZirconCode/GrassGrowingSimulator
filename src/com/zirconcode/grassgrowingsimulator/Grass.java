@@ -200,4 +200,14 @@ public class Grass {
 		c.drawPath(path, paint);
 	}
 	
+	public int getX()
+	{
+		return x;
+	}
+	
+	public int getY()
+	{
+		return y;
+	}
+	
 }

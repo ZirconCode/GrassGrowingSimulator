@@ -132,7 +132,15 @@ public class SimulatorView extends SurfaceView implements SurfaceHolder.Callback
 			
 		}
 		else if (event.getAction() == MotionEvent.ACTION_DOWN) {
-			lawn.plant((int)event.getX(), (int)event.getY());
+			switch(tMenu.getTool()) {
+				case 0: lawn.plant((int)event.getX(), (int)event.getY());
+						break;
+				case 1: lawn.cut((int)event.getX(), (int)event.getY());
+						break;
+				case 2: lawn.water((int)event.getX(), (int)event.getY());
+						break;
+			}
+			
 		}
 		
 		return super.onTouchEvent(event);

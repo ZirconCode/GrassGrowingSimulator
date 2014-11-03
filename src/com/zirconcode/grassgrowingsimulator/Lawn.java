@@ -1,5 +1,6 @@
 package com.zirconcode.grassgrowingsimulator;
 
+import java.util.Iterator;
 import java.util.Vector;
 
 import org.simpleframework.xml.ElementList;
@@ -18,6 +19,9 @@ public class Lawn {
 	private double windChange;
 	private double maxWind;
 	
+	private static final int cuttingRadius = 50;
+	private static final int wateringRadius = 100;
+	private static final int wateringMultiplier = 14;
 	// water grid
 	// wind grid
 	
@@ -42,6 +46,33 @@ public class Lawn {
 	{
 		Grass g = new Grass(x,y);
 		lawn.add(g);
+	}
+	
+	public void cut(int x, int y)
+	{
+		// TODO remove reduncancy
+		// TODO visual indicators...
+		for (Iterator<Grass> it = lawn.iterator(); it.hasNext();) 
+		{
+		    Grass g = it.next();
+		    int dist = (int) Math.sqrt(Math.pow(g.getX()-x,2)+Math.pow(g.getY()-y,2));
+		    if(dist < cuttingRadius) it.remove(); 	
+		}
+	}
+	
+	public void water(int x, int y)
+	{
+		// TODO ditto ^
+		for(int i = 0; i<lawn.size(); i++)
+		{
+			int dist = (int) Math.sqrt(Math.pow(lawn.get(i).getX()-x,2)+Math.pow(lawn.get(i).getY()-y,2));
+			if(dist < wateringRadius)
+			{
+				for(int j = 0; j<wateringMultiplier; j++) 
+					lawn.get(i).tick();
+			}
+			
+		}
 	}
 	
 	public void tick()
