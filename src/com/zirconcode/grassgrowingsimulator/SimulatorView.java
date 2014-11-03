@@ -10,6 +10,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -24,6 +25,7 @@ public class SimulatorView extends SurfaceView implements SurfaceHolder.Callback
 	
 	private MainThread thread;
 	private Lawn lawn;
+	private ToolMenu tMenu;
 	
 	@SuppressLint("NewApi")
 	public SimulatorView(Context context) {
@@ -52,6 +54,7 @@ public class SimulatorView extends SurfaceView implements SurfaceHolder.Callback
 			height = display.getHeight();  // deprecated
 		}
 		
+		tMenu = new ToolMenu(new Rect(50,50,250,250)); // todo
 		lawn = new Lawn(width,height);
 	}
 	
@@ -84,17 +87,13 @@ public class SimulatorView extends SurfaceView implements SurfaceHolder.Callback
     	canvas.drawColor(Color.rgb(180,130,70));
     	lawn.draw(paint, canvas);
     	
+    	tMenu.draw(paint, canvas);
+    	
     	if(thread.getPaused()) 
     	{
     		canvas.drawText("Paused", 100, 100, paint); // TODO...
     	}
     	
-    	// Menu
-    		// pick tools
-    		// cutter - (-> sell)
-    		// waterer
-    		// planter - (pick grass)
-    		// Store?
     }
     
     @Override
@@ -132,7 +131,11 @@ public class SimulatorView extends SurfaceView implements SurfaceHolder.Callback
 		//{
 			//lawn.plant((int)event.getX(), (int)event.getY());
 		//}
-		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+		if(tMenu.respondToTouch(event))
+		{
+			
+		}
+		else if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			//if (event.getY() > getHeight() - 50) {
 				//thread.setRunning(false);
 				//((Activity)getContext()).finish();
@@ -141,6 +144,7 @@ public class SimulatorView extends SurfaceView implements SurfaceHolder.Callback
 			//}
 			lawn.plant((int)event.getX(), (int)event.getY());
 		}
+		
 		return super.onTouchEvent(event);
 	}
 
