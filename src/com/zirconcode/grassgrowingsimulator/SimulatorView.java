@@ -127,21 +127,11 @@ public class SimulatorView extends SurfaceView implements SurfaceHolder.Callback
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		//if (event.getAction() == MotionEvent.)
-		//{
-			//lawn.plant((int)event.getX(), (int)event.getY());
-		//}
 		if(tMenu.respondToTouch(event))
 		{
 			
 		}
 		else if (event.getAction() == MotionEvent.ACTION_DOWN) {
-			//if (event.getY() > getHeight() - 50) {
-				//thread.setRunning(false);
-				//((Activity)getContext()).finish();
-			//} else {
-				
-			//}
 			lawn.plant((int)event.getX(), (int)event.getY());
 		}
 		
