@@ -19,7 +19,7 @@ public class Lawn {
 	private double windChange;
 	private double maxWind;
 	
-	private static final int cuttingRadius = 50;
+	private static final int cuttingRadius = 50; // TODO
 	private static final int wateringRadius = 100;
 	private static final int wateringMultiplier = 14;
 	// water grid

@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -54,7 +55,13 @@ public class SimulatorView extends SurfaceView implements SurfaceHolder.Callback
 			height = display.getHeight();  // deprecated
 		}
 		
-		tMenu = new ToolMenu(new Rect(50,50,250,250)); // todo
+		final float scale = getResources().getDisplayMetrics().density;
+		float top = 20*scale;
+		float left = 20*scale;
+		float size = 70*scale;
+		RectF toolMenuRect = new RectF(top,left,top+size,left+size);
+		
+		tMenu = new ToolMenu(toolMenuRect);
 		lawn = new Lawn(width,height);
 	}
 	

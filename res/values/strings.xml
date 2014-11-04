@@ -13,8 +13,12 @@
     <string name='clear_yes'>Mow Lawn!</string>
     <string name='clear_no'>Keep It.</string>
     
-    <string name='lawn_filename'>lawn</string>
+    <string name='tool_water'>Water</string>
+    <string name='tool_cut'>Cut</string>
+     <string name='tool_plant'>Plant</string>
     
+    
+    <string name='lawn_filename'>lawn</string>
     
     <string name='logo_description'>game logo</string>
 
